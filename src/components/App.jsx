@@ -1,40 +1,44 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import { Statistics } from './Statistics/Statistics';
 import { Section } from './Section/Section';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+export function App () {
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+  
+  // state = {
+  //   good: 0,
+  //   neutral: 0,
+  //   bad: 0,
+  // };
 
-  onLeaveFeedback = e => {
+  const onLeaveFeedback = e => {
     const { name } = e.target;
-    this.setState(prevState => ({ [name]: prevState[name] + 1 }));
+    (prevState => ({ [name]: prevState[name] + 1 }));
   };
 
-  countTotalFeedback = () => {
-    return Object.values(this.state).reduce((acc, item) => acc + item, 0);
+  const countTotalFeedback = () => {
+    return Object.values(state).reduce((acc, item) => acc + item, 0);
   };
 
-  countPositiveFeedbackPercentage = () => {
+  const countPositiveFeedbackPercentage = () => {
     return this.countTotalFeedback()
-      ? Math.ceil((this.state.good / this.countTotalFeedback()) * 100)
+      ? Math.ceil((good / countTotalFeedback()) * 100)
       : 0;
   };
 
-  render() {
-    const total = this.countTotalFeedback();
-    const positivePercentage = this.countPositiveFeedbackPercentage();
-    const { good, neutral, bad } = this.state;
+
+    const total = countTotalFeedback();
+    const positivePercentage =countPositiveFeedbackPercentage();
+    //  const { good, neutral, bad } = useState;
     return (
       <>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={Object.keys(this.state)}
-            onLeaveFeedback={this.onLeaveFeedback}
+            options={Object.keys(value)}
+            onLeaveFeedback={onLeaveFeedback}
           />
         </Section>
 
@@ -50,4 +54,4 @@ export class App extends Component {
       </>
     );
   }
-}
+
